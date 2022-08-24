@@ -1,5 +1,4 @@
 import * as puppeteer from 'puppeteer';
-import sleep from '../src/lib/sleep';
 
 describe('My first test', () => {
 
