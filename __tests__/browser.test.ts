@@ -1,14 +1,25 @@
 import * as puppeteer from 'puppeteer';
+import sleep from '../src/lib/sleep';
 
 describe('My first test', () => {
 
-  it('Should open and close browser', async () => {
-    const browser = await puppeteer.launch({
+  let browser: puppeteer.Browser
+  let page: puppeteer.Page
+
+  beforeAll( async () => {
+    browser = await puppeteer.launch({
       headless: false,
       defaultViewport: null
     })
 
-    const page = await browser.newPage()
+    page = await browser.newPage()
+  })
+
+  afterAll( async () => {
+    await browser.close()
+  })
+
+  it('Should open and close browser', async () => {
     await page.goto('https://yahoo.com/')
     // sleep(5000)
     await page.waitForSelector('img')
@@ -23,7 +34,8 @@ describe('My first test', () => {
 
     // Navigate back
     await page.goBack()
-    await page.waitForSelector('img')
+    // await page.waitForSelector('img')
+    sleep(100)
 
     // Navigate forward
     await page.goForward()
@@ -31,9 +43,6 @@ describe('My first test', () => {
     // Open new page
     const page2 = await browser.newPage()
     await page2.goto('https://github.com/')
-
-
-    await browser.close()
 
   }, 350000)
 

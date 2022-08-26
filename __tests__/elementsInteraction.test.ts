@@ -1,14 +1,26 @@
 import * as puppeteer from 'puppeteer';
 import sleep from '../src/lib/sleep'
 
-describe('Elemnts interaction', () => {
-  it('Should open and interact with simple context menu', async () => {
-    const browser = await puppeteer.launch({
+describe('Elements interaction', () => {
+
+  let browser: puppeteer.Browser
+  let page: puppeteer.Page
+
+  beforeAll( async () => {
+    browser = await puppeteer.launch({
       headless: false,
       defaultViewport: null
     })
 
-    const page = await browser.newPage()
+    page = await browser.newPage()
+  })
+
+  afterAll( async () => {
+    await browser.close()
+  })
+
+  it('Should open and interact with simple context menu', async () => {
+
     await page.goto('https://demo.guru99.com/test/simple_context_menu.html')
 
     page.on('dialog', async (dialog) => {
@@ -31,17 +43,9 @@ describe('Elemnts interaction', () => {
 
     sleep(3000)
 
-    await browser.close()
-
   }, 350000)
 
   it('Should open, fill, and submit form', async () => {
-    const browser = await puppeteer.launch({
-      headless: false,
-      defaultViewport: null
-    })
-
-    const page = await browser.newPage()
     await page.goto('https://devexpress.github.io/testcafe/example/')
 
     await page.type('#developer-name', 'John Doe', {
@@ -56,8 +60,6 @@ describe('Elemnts interaction', () => {
     await page.click('#submit-button')
 
     sleep(3000)
-
-    await browser.close()
 
   }, 350000)
 
