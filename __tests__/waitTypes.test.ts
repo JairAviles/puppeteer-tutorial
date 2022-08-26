@@ -8,7 +8,8 @@ describe('Wait types', () => {
   beforeAll( async () => {
     browser = await puppeteer.launch({
       headless: false,
-      defaultViewport: null
+      defaultViewport: null,
+      slowMo: 500
     })
 
     page = await browser.newPage()
@@ -41,6 +42,25 @@ describe('Wait types', () => {
     })
 
     await page.click('#showSmallModal')
+
+    // wait for function
+    await page.waitForFunction(() =>
+      document.querySelector('#example-modal-sizes-title-sm')?.innerHTML.includes('Small Modal')
+    )
+
+    // close small modal
+    await page.click('#closeSmallModal')
+
+    // wait for function
+    await page.waitForFunction(() =>
+      !document.querySelector('#example-modal-sizes-title-sm')
+    )
+
+    // observe viewport
+    const observeResize = page.waitForFunction('window.innerWidth < 100')
+    await page.setViewport({ width: 50, height: 50 })
+
+    await observeResize
 
   }, 350000)
 })
