@@ -8,7 +8,6 @@ describe('Elements interaction', () => {
 
   beforeAll( async () => {
     browser = await puppeteer.launch({
-      headless: false,
       defaultViewport: null
     })
 

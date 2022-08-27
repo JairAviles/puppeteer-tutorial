@@ -7,7 +7,6 @@ describe('Wait types', () => {
 
   beforeAll( async () => {
     browser = await puppeteer.launch({
-      headless: false,
       defaultViewport: null,
       slowMo: 500
     })
@@ -19,16 +18,13 @@ describe('Wait types', () => {
     await browser.close()
   })
 
-  it('Should show different wait types', async () => {
+  it.skip('Should show different wait types', async () => {
     await page.goto('https://github.com/', {
       waitUntil: 'networkidle2'
     })
 
-    // explicit wait for timeout (deprecated)
-    await page.waitForTimeout(500)
-
     // wait for CSS selector
-    await page.waitForSelector('body > footer')
+    await page.waitForSelector('footer')
 
   }, 350000)
 

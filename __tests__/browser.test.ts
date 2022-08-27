@@ -8,7 +8,6 @@ describe('My first test', () => {
 
   beforeAll( async () => {
     browser = await puppeteer.launch({
-      headless: false,
       defaultViewport: null
     })
 
