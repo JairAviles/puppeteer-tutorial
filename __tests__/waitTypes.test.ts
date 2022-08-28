@@ -2,6 +2,8 @@ import * as puppeteer from 'puppeteer';
 
 describe('Wait types', () => {
 
+  jest.setTimeout(350000)
+
   let browser: puppeteer.Browser
   let page: puppeteer.Page
 
@@ -18,15 +20,13 @@ describe('Wait types', () => {
     await browser.close()
   })
 
-  it.skip('Should show different wait types', async () => {
-    await page.goto('https://github.com/', {
-      waitUntil: 'networkidle2'
-    })
+  it('Should show different wait types', async () => {
+    await page.goto('https://github.com/')
 
     // wait for CSS selector
     await page.waitForSelector('footer')
 
-  }, 350000)
+  })
 
   it('Should interact with Modals', async () => {
     await page.goto('https://demoqa.com/modal-dialogs', {
@@ -58,5 +58,5 @@ describe('Wait types', () => {
 
     await observeResize
 
-  }, 350000)
+  })
 })
